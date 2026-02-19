@@ -228,12 +228,16 @@ class GitCommandManager {
       args.push(ref)
     }
 
-    await this.execGit(args)
+    await retryHelper.execute(async () => {
+      await this.execGit(args)
+    })
   }
 
   async checkoutDetach(): Promise<void> {
     const args = ['checkout', '--detach']
-    await this.execGit(args)
+    await retryHelper.execute(async () => {
+      await this.execGit(args)
+    })
   }
 
   async config(
@@ -311,9 +315,8 @@ class GitCommandManager {
       args.push(arg)
     }
 
-    const that = this
     await retryHelper.execute(async () => {
-      await that.execGit(args)
+      await this.execGit(args)
     })
   }
 
@@ -380,9 +383,8 @@ class GitCommandManager {
   async lfsFetch(ref: string): Promise<void> {
     const args = ['lfs', 'fetch', 'origin', ref]
 
-    const that = this
     await retryHelper.execute(async () => {
-      await that.execGit(args)
+      await this.execGit(args)
     })
   }
 
@@ -457,9 +459,8 @@ class GitCommandManager {
       args.push('--recursive')
     }
 
-    const that = this
     await retryHelper.execute(async () => {
-      await that.execGit(args)
+      await this.execGit(args)
     })
   }
 

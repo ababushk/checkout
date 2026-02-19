@@ -789,13 +789,17 @@ class GitCommandManager {
             else {
                 args.push(ref);
             }
-            yield this.execGit(args);
+            yield retryHelper.execute(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.execGit(args);
+            }));
         });
     }
     checkoutDetach() {
         return __awaiter(this, void 0, void 0, function* () {
             const args = ['checkout', '--detach'];
-            yield this.execGit(args);
+            yield retryHelper.execute(() => __awaiter(this, void 0, void 0, function* () {
+                yield this.execGit(args);
+            }));
         });
     }
     config(configKey, configValue, globalConfig, add, configFile) {
@@ -850,9 +854,8 @@ class GitCommandManager {
             for (const arg of refSpec) {
                 args.push(arg);
             }
-            const that = this;
             yield retryHelper.execute(() => __awaiter(this, void 0, void 0, function* () {
-                yield that.execGit(args);
+                yield this.execGit(args);
             }));
         });
     }
@@ -911,9 +914,8 @@ class GitCommandManager {
     lfsFetch(ref) {
         return __awaiter(this, void 0, void 0, function* () {
             const args = ['lfs', 'fetch', 'origin', ref];
-            const that = this;
             yield retryHelper.execute(() => __awaiter(this, void 0, void 0, function* () {
-                yield that.execGit(args);
+                yield this.execGit(args);
             }));
         });
     }
@@ -990,9 +992,8 @@ class GitCommandManager {
             if (recursive) {
                 args.push('--recursive');
             }
-            const that = this;
             yield retryHelper.execute(() => __awaiter(this, void 0, void 0, function* () {
-                yield that.execGit(args);
+                yield this.execGit(args);
             }));
         });
     }
